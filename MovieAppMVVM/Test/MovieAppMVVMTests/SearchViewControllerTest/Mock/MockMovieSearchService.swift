@@ -15,6 +15,9 @@ struct MockService: MovieSearchService {
         case failure(Error)
     }
     let mode: Mode
+    init(mode: Mode) {
+           self.mode = mode
+       }
 
     func searchMovies(query: String, completion: @escaping (Result<[Movie], Error>) -> Void) {
         switch mode {

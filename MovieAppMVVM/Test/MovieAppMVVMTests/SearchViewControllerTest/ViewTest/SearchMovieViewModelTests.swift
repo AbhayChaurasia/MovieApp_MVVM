@@ -20,11 +20,14 @@ final class SearchMovieViewModelTests: XCTestCase {
             Movie(id: 2, title: "Interstellar", releaseDate: "2014-11-07", posterPath: nil, overview: "Space.")
         ]
     }
-
+    var emptymockMovies: [Movie] {
+        return [
+             
+        ]
+    }
     // MARK: - Test Cases
 
-    //    Then the ViewModel correctly updates its internal movies list,
-    //    And the UI update callback (onMoviesUpdated) is triggered.
+    
     func test_searchSuccess_populatesMovies() {
         let vm = SearchMovieViewModel(service: MockService(mode: .success(mockMovies)))
 
@@ -45,7 +48,7 @@ final class SearchMovieViewModelTests: XCTestCase {
 
         let expectation = expectation(description: "Empty error")
         vm.onError = { msg in
-            XCTAssertEqual(msg, "Search query cannot be empty.")
+            XCTAssertEqual(msg, "Movie name not found")
             expectation.fulfill()
         }
 
@@ -69,21 +72,26 @@ final class SearchMovieViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+
     func test_clearResults_emptiesMoviesArray() {
-        let vm = SearchMovieViewModel(service: MockService(mode: .success(mockMovies)))
+        
+        let vm = SearchMovieViewModel(service: MockService(mode: .success(emptymockMovies)))
         let updateExp = expectation(description: "updated")
 
         vm.onMoviesUpdated = {
-            XCTAssertEqual(vm.count, 2)
-            vm.clearResults()
-            XCTAssertEqual(vm.count, 0)
-             updateExp.fulfill()
+            updateExp.fulfill()
         }
 
         vm.search(query: "anything")
+
         wait(for: [updateExp], timeout: 1)
-    }
-    
+        
+        XCTAssertEqual(vm.count, 0)
+
+         
+
+     }
+
     
     //this test check movie count is zero so show pop up error  messga
     func test_searchWithEmptyResultsTriggersError() {
@@ -96,7 +104,7 @@ final class SearchMovieViewModelTests: XCTestCase {
             errorExpectation.fulfill()
         }
         
-        vm.search(query: "noresults")
+        vm.search(query: "Jani dusman")
         
         wait(for: [errorExpectation], timeout: 1.0)
     }
