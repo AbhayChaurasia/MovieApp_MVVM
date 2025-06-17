@@ -20,7 +20,7 @@ class FavoriteListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Favorites"
+        title = "Favorites List"
         tableView.dataSource = self
         tableView.delegate   = self
         viewModel.onFavoritesChanged = { [weak self] in

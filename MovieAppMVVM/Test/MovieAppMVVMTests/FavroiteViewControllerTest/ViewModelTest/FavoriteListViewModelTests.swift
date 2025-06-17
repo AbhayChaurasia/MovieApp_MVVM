@@ -5,10 +5,7 @@
 //  Created by iMacRaja on 14/06/25.
 //
 
-import Testing
-@testable import MovieAppMVVM
-
-
+ 
 import XCTest
 @testable import MovieAppMVVM
 
