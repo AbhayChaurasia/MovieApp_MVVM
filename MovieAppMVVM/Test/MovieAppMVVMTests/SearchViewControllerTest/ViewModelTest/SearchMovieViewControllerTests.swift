@@ -40,11 +40,15 @@ final class SearchMovieViewControllerTests: XCTestCase {
         XCTAssertEqual(mockViewModel.searchQuery, "Inception")
     }
     
-    func test_favoriteTapped_callsCoordinator() {
+  
+      func test_favoriteTapped_callsCoordinator() {
+        let dummyMovie = Movie(id: 1, title: "Mock Movie", releaseDate: "2024-01-01", posterPath: nil, overview: nil)
+        FavoritesStorage.shared.add(movie: dummyMovie)
+
         sut.favoriteTapped()
+
         XCTAssertTrue(mockCoordinator.didShowFavorites)
     }
-    
     func test_openDetails_callsCoordinatorWithMovie() {
         let movie = Movie(id: 1, title: "Test Movie", releaseDate: nil, posterPath: nil, overview: nil)
         mockViewModel.movies = [movie]
